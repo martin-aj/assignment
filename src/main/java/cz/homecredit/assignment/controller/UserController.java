@@ -23,7 +23,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     @ApiOperation(value = "Gets basic rate and discount rate for particular discount code.")
-    public User index(
+    public User getUserDetails(
             @ApiParam("Identification of the user") @PathVariable Long userId) {
         return userService.getUsersTodos(userId);
     }

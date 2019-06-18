@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final RestTemplate restTemplate;
 
@@ -26,17 +26,20 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUsersTodos(long userId) {
-        final URI userUri = UriComponentsBuilder.fromUri(URI.create(BASE_URL)).path("/users/" + userId).build().toUri();
+        final URI userUri = UriComponentsBuilder.fromUri(URI.create(BASE_URL))
+                .path("/users/" + userId)
+                .build()
+                .toUri();
         final RequestEntity<?> requestUserEntity = new RequestEntity<>(GET, userUri);
-        new User();
-        User response = restTemplate.exchange(requestUserEntity, User.class)
-                .getBody();
+        User response = restTemplate.exchange(requestUserEntity, User.class).getBody();
 
-        final URI todoUri = UriComponentsBuilder.fromUri(URI.create(BASE_URL)).path("/todos/")
-                .queryParam("userId", userId).build().toUri();
+        final URI todoUri = UriComponentsBuilder.fromUri(URI.create(BASE_URL))
+                .path("/todos/")
+                .queryParam("userId", userId)
+                .build()
+                .toUri();
         final RequestEntity<?> requestTodoEntity = new RequestEntity<>(GET, todoUri);
-        List<Todo> todos = restTemplate.exchange(requestTodoEntity, new ParameterizedTypeReference<List<Todo>>(){})
-                .getBody();
+        List<Todo> todos = restTemplate.exchange(requestTodoEntity, new ParameterizedTypeReference<List<Todo>>() {}).getBody();
 
         if (response != null) {
             response.setTodos(todos);
