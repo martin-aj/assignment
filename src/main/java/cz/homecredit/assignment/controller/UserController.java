@@ -2,6 +2,7 @@ package cz.homecredit.assignment.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import cz.homecredit.assignment.config.SwaggerConfig;
 import cz.homecredit.assignment.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,13 +17,13 @@ import cz.homecredit.assignment.service.UserService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/user", produces = APPLICATION_JSON_VALUE)
-@Api(value = "/user")
+@Api(value = "/user", tags = {SwaggerConfig.TAG_USERS})
 public class UserController {
 
     private final UserService userService;
 
     @GetMapping("/{userId}")
-    @ApiOperation(value = "Gets basic rate and discount rate for particular discount code.")
+    @ApiOperation(value = "Returns user's personal details and list of to-do's")
     public User getUserDetails(
             @ApiParam("Identification of the user") @PathVariable Long userId) {
         return userService.getUsersTodos(userId);
